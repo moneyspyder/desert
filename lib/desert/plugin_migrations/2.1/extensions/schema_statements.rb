@@ -7,6 +7,7 @@ ActiveRecord::ConnectionAdapters::SchemaStatements.module_eval do
       unless ActiveRecord::Base.connection.tables.include?(smt)
         execute "CREATE TABLE #{smt} (plugin_name #{type_to_sql(:string)}, version #{type_to_sql(:string)})"
       end
+      
       if Desert::PluginMigrations::Migrator.legacy_schema_table_exists?
         plugins_and_versions = select_all("SELECT plugin_name, version from #{Desert::PluginMigrations::Migrator.schema_info_table_name}")
         plugins_and_versions.each do |plugin_data|
