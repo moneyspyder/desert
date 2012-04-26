@@ -12,7 +12,7 @@ ActiveRecord::ConnectionAdapters::SchemaStatements.module_eval do
         plugins_and_versions.each do |plugin_data|
           plugin_name, version = plugin_data["plugin_name"], plugin_data["version"]
           plugin = Desert::Manager.find_plugin(plugin_name)
-	  unless plugin.nil?
+	  
 		  migration_versions = Dir["#{plugin.migration_path}/*.rb"].map do |path|
 		    File.basename(path, ".rb")
 		  end.select do |migration|
@@ -28,7 +28,7 @@ ActiveRecord::ConnectionAdapters::SchemaStatements.module_eval do
 		      Integer(migration_version.split("_").first.sub(/^0*/, ''))
 		    ])
 		    execute insert_sql
-	    end
+	    
 	    end
         end
       end
